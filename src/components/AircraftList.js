@@ -1,27 +1,27 @@
 import React, { PropTypes } from 'react'
 import Aircraft from './Aircraft'
 
-const AircraftList = ({ aircrafts, onAircraftClick }) => (
+
+const AircraftList = ({ aircrafts, onAircraftClick }) => {
+  const { items } = aircrafts.items
+
+  const listItems = items.map(aircraft =>
+    <Aircraft
+      key={aircraft.id}
+      {...aircraft}
+      onClick={() => onAircraftClick(aircraft.id)}
+    />
+  )
+
+  return (
   <ul>
-    {aircrafts.map(aircraft =>
-      <Aircraft
-        key={aircraft.id}
-        {...aircraft}
-        onClick={() => onAircraftClick(aircraft.id)}
-      />
-    )}
+    {listItems}
   </ul>
-)
+)}
 
 AircraftList.propTypes = {
-  isFetching: PropTypes.bool.isRequired,
-  lastUpdated: PropTypes.number,
-  items: PropTypes.objectOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    tail: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  })),
-  onAircraftClick: PropTypes.func.isRequired
+  aircrafts: PropTypes.object.isRequired,
+  onAircraftClick: PropTypes.func.isRequired,
 }
 
 export default AircraftList

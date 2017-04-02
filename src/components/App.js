@@ -1,17 +1,3 @@
-/*
-import React from 'react'
-import VisibleAircraftList from '../containers/VisibleAircraftList'
-
-const App = () => (
-  <div>
-    <VisibleAircraftList />
-  </div>
-)
-
-export default App
-*/
-
-
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { fetchAircraftListIfNeeded, invalidateAircraftList } from '../actions'

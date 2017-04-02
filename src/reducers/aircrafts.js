@@ -7,7 +7,37 @@ import {
   RECEIVE_AIRCRAFT_DETAILS
 } from '../actions'
 
-const aircraft = (state = [], action) => {
+const details = (state = [], action) => {
+  switch (action.type) {
+    case 'INVALIDATE_AIRCRAFT_DETAILS':
+      return {
+        ...state,
+        didInvalidate: false
+      }
+    case 'REQUEST_AIRCRAFT_DETAILS':
+      return {
+        ...state,
+        isFetching: true,
+        didInvalidate: false
+      }
+    case 'RECEIVE_AIRCRAFT_DETAILS':
+      return {
+        ...state,
+        isFetching: false,
+        didInvalidate: false,
+        items: action.items,
+        lastUpdated: action.receivedAt
+      }
+    default:
+      return state
+  }
+}
+
+const aircraft = (state = {
+  isFetching: false,
+  didInvalidate: false,
+  items: []
+}, action) => {
   switch (action.type) {
     case 'INVALIDATE_AIRCRAFT_LIST':
       return {
@@ -33,39 +63,8 @@ const aircraft = (state = [], action) => {
     case 'RECEIVE_AIRCRAFT_DETAILS':
       return {
         ...state,
-        items: details(state[action.tail], action)
+        items: (details(state, action))
       }  
-    default:
-      return state
-  }
-}
-
-
-const details = (state = {
-  isFetching: false,
-  didInvalidate: false,
-  items: []
-}, action) => {
-  switch (action.type) {
-    case 'INVALIDATE_AIRCRAFT_DETAILS':
-      return {
-        ...state,
-        didInvalidate: false
-      }
-    case 'REQUEST_AIRCRAFT_DETAILS':
-      return {
-        ...state,
-        isFetching: true,
-        didInvalidate: false
-      }
-    case 'RECEIVE_AIRCRAFT_DETAILS':
-      return {
-        ...state,
-        isFetching: false,
-        didInvalidate: false,
-        items: action.items,
-        lastUpdated: action.receivedAt
-      }
     default:
       return state
   }
@@ -82,14 +81,14 @@ const aircrafts = (state = {
     case 'RECEIVE_AIRCRAFT_LIST':
       return {
         ...state,
-        items: aircraft(undefined, action)
+        items: aircraft(state, action)
       }
     case 'INVALIDATE_AIRCRAFT_DETAILS':
     case 'REQUEST_AIRCRAFT_DETAILS':
     case 'RECEIVE_AIRCRAFT_DETAILS':
       return {
         ...state,
-        items: aircraft(undefined, action)
+        items: aircraft(state, action)
       }
     default:
       return state
