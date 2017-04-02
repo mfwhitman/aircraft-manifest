@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react'
 
 const Aircraft = ({ onClick, id, tail, name}) => (
-  <li
-    onClick={onClick}
-  >
+  <li>
     <h2>{tail}</h2>
     <p>{id}</p>
     <p>{name}</p>
@@ -11,7 +9,6 @@ const Aircraft = ({ onClick, id, tail, name}) => (
 )
 
 Aircraft.propTypes = {
-  onClick: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   tail: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired

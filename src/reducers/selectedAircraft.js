@@ -1,4 +1,4 @@
-const selectedAircraft = (state = 'SELECT_NONE', action) => {
+const selectedAircraft = (state = '', action) => {
   switch (action.type) {
     case 'SET_SELECTED_AIRCRAFT':
       return action.tail

@@ -1,49 +1,95 @@
-const aircraft = (state, action) => {
+import {
+  INVALIDATE_AIRCRAFT_LIST,
+  REQUEST_AIRCRAFT_LIST,
+  RECEIVE_AIRCRAFT_LIST,
+  INVALIDATE_AIRCRAFT_DETAILS,
+  REQUEST_AIRCRAFT_DETAILS,
+  RECEIVE_AIRCRAFT_DETAILS
+} from '../actions'
+
+const aircraft = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_AIRCRAFT':
-      return {
-        id: action.id,
-        tail: action.text,
-        name: action.name,
-        isSelected: false,
-        isFetching: false,
-        didInvalidate: false
-      }
-    case 'ADD_AIRCRAFT_DETAILS':
+    case 'INVALIDATE_AIRCRAFT_LIST':
       return {
         ...state,
-        details: details(state[action.tail], action)
+        didInvalidate: false
+      }
+    case 'REQUEST_AIRCRAFT_LIST':
+      return {
+        ...state,
+        isFetching: true,
+        didInvalidate: false
+      }
+    case 'RECEIVE_AIRCRAFT_LIST':
+      return {
+        ...state,
+        isFetching: false,
+        didInvalidate: false,
+        items: action.items,
+        lastUpdated: action.receivedAt
+      }
+    case 'INVALIDATE_AIRCRAFT_DETAILS':
+    case 'REQUEST_AIRCRAFT_DETAILS':
+    case 'RECEIVE_AIRCRAFT_DETAILS':
+      return {
+        ...state,
+        items: details(state[action.tail], action)
       }  
     default:
       return state
   }
 }
 
-const details = (state = [], action) => {
+
+const details = (state = {
+  isFetching: false,
+  didInvalidate: false,
+  items: []
+}, action) => {
   switch (action.type) {
-    case 'ADD_AIRCRAFT_DETAILS':
+    case 'INVALIDATE_AIRCRAFT_DETAILS':
       return {
-        image: action.image,
-        passengers: action.passengers,
-        class: action.class,
-        year: action.year
+        ...state,
+        didInvalidate: false
+      }
+    case 'REQUEST_AIRCRAFT_DETAILS':
+      return {
+        ...state,
+        isFetching: true,
+        didInvalidate: false
+      }
+    case 'RECEIVE_AIRCRAFT_DETAILS':
+      return {
+        ...state,
+        isFetching: false,
+        didInvalidate: false,
+        items: action.items,
+        lastUpdated: action.receivedAt
       }
     default:
-      return state  
+      return state
   }
 }
 
-const aircrafts = (state = {}, action) => {
+const aircrafts = (state = {
+  isFetching: false,
+  didInvalidate: false,
+  items: []
+}, action) => {
   switch (action.type) {
-    case 'ADD_AIRCRAFT':
+    case 'INVALIDATE_AIRCRAFT_LIST':
+    case 'REQUEST_AIRCRAFT_LIST':
+    case 'RECEIVE_AIRCRAFT_LIST':
       return {
         ...state,
-        [action.tail]: aircraft(undefined, action)
+        items: aircraft(undefined, action)
       }
-    case 'ADD_AIRCRAFT_DETAILS':
+    case 'INVALIDATE_AIRCRAFT_DETAILS':
+    case 'REQUEST_AIRCRAFT_DETAILS':
+    case 'RECEIVE_AIRCRAFT_DETAILS':
       return {
         ...state,
-        [action.tail]: aircraft(undefined, action)
+        items: aircraft(undefined, action)
       }
     default:
       return state

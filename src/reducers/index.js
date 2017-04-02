@@ -1,15 +1,11 @@
 import { combineReducers } from 'redux'
-import todos from './todos'
-import visibilityFilter from './visibilityFilter'
 
 import aircrafts from './aircrafts'
 import selectedAircraft from './selectedAircraft'
 
-const todoApp = combineReducers({
-  todos,
-  visibilityFilter,
+const aircraftApp = combineReducers({
   aircrafts,
   selectedAircraft
 })
 
-export default todoApp
+export default aircraftApp

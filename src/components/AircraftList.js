@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Aircraft from './Aicraft'
+import Aircraft from './Aircraft'
 
 const AircraftList = ({ aircrafts, onAircraftClick }) => (
   <ul>
@@ -14,11 +14,13 @@ const AircraftList = ({ aircrafts, onAircraftClick }) => (
 )
 
 AircraftList.propTypes = {
-  aircrafts: PropTypes.arrayOf(PropTypes.shape({
+  isFetching: PropTypes.bool.isRequired,
+  lastUpdated: PropTypes.number,
+  items: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     tail: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
-  }).isRequired).isRequired,
+  })),
   onAircraftClick: PropTypes.func.isRequired
 }
 
