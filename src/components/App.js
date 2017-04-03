@@ -5,7 +5,10 @@ import VisibleAircraftList from '../containers/VisibleAircraftList'
 
 class App extends Component {
   static propTypes = {
-    items: PropTypes.object.isRequired,
+    items: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object,
+    ]).isRequired,
     isFetching: PropTypes.bool.isRequired,
     lastUpdated: PropTypes.number,
     dispatch: PropTypes.func.isRequired
