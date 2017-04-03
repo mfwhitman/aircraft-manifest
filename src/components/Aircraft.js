@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import DetailLink from '../containers/DetailLink'
+import config from '../config.js'
 
 const Aircraft = ({ onClick, id, tail, name, details}) => (
   <li>
@@ -9,7 +10,7 @@ const Aircraft = ({ onClick, id, tail, name, details}) => (
     {details ?
       <div>
       	<p>{details.class}</p>
-        <img src={"https://privatefly-interview-api.herokuapp.com" + details.image}></img>
+        <img src={config.imageEndpoint.URL + details.image}></img>
         <p>Passengers: {details.passengers}</p>
         <p>Year: {details.year}</p>
       </div>

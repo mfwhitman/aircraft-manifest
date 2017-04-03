@@ -1,3 +1,5 @@
+import config from '../config.js'
+
 export const SET_SELECTED_AIRCRAFT = 'SET_SELECTED_AIRCRAFT'
 export const INVALIDATE_AIRCRAFT_LIST = 'INVALIDATE_AIRCRAFT_LIST'
 export const REQUEST_AIRCRAFT_LIST = 'REQUEST_AIRCRAFT_LIST'
@@ -37,7 +39,7 @@ function receiveAircraftList(json) {
 
 export const fetchAircraftList = () => dispatch => {
   dispatch(requestAircraftList())
-  return fetch(`https://privatefly-interview-api.herokuapp.com/api/v1/aircraft`)
+  return fetch(`${config.apiEndpoint.URL}`)
     .then(response => response.json())
     .then(json => dispatch(receiveAircraftList(json)))
 }
@@ -84,7 +86,7 @@ export function receiveAircraftDetails(tail, json) {
 
 const fetchAircraftDetails = tail => dispatch => {
   dispatch(requestAircraftDetails(tail))
-  return fetch(`https://privatefly-interview-api.herokuapp.com/api/v1/aircraft/${tail}`)
+  return fetch(`${config.apiEndpoint.URL}/${tail}`)
     .then(response => response.json())
     .then(json => dispatch(receiveAircraftDetails(tail, json)))
 }
